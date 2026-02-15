@@ -14,6 +14,7 @@
   border-radius: 100px;
   background-color: #000;
   overflow: hidden;
+  font-family: var(--font-body);
   font-size: 18px;
   font-weight: 500;
   position: relative;
@@ -194,6 +195,7 @@
   color: var(--backgroundColor);
 }
 .loader-title {
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 14px;
   letter-spacing: 0.2px;
@@ -284,9 +286,11 @@
   width: 100%;
   transform: translateY(-50%);
   color: var(--backgroundColor);
+  font-family: var(--font-accent);
   font-size: 60px;
   font-weight: 600;
-  text-transform: uppercase;
+  text-transform: none;
+  font-style: italic;
 }
 .loading-marquee span {
   padding: 0px 50px;

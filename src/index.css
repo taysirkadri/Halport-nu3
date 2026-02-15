@@ -1,11 +1,32 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Michroma&family=Playwrite+NZ+Basic+Guides&family=Space+Grotesk:wght@300..700&display=swap");
+
+/* ── Typography System ──────────────────────────────────────
+   Michroma          → Display / large headings (H1, section titles)
+   Space Grotesk     → UI text (body, nav, buttons, labels, forms)
+   Playwrite NZ      → Decorative accent lines only
+   ──────────────────────────────────────────────────────── */
 
 :root {
-  font-family: "Geist", sans-serif;
+  /* Font stacks */
+  --font-display: "Michroma", sans-serif;
+  --font-body: "Space Grotesk", sans-serif;
+  --font-accent: "Playwrite NZ Basic Guides", serif;
 
+  /* Type scale — fluid clamp(min, preferred, max) */
+  --text-xs: clamp(0.7rem, 0.65rem + 0.25vw, 0.8rem);       /* ~11-13px */
+  --text-sm: clamp(0.8rem, 0.75rem + 0.25vw, 0.9rem);       /* ~13-14px */
+  --text-base: clamp(0.875rem, 0.825rem + 0.25vw, 1rem);     /* ~14-16px */
+  --text-lg: clamp(1rem, 0.925rem + 0.4vw, 1.25rem);         /* ~16-20px */
+  --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.75rem);       /* ~20-28px */
+  --text-2xl: clamp(1.5rem, 1.25rem + 1.25vw, 2.5rem);       /* ~24-40px */
+  --text-3xl: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);           /* ~32-56px */
+  --text-4xl: clamp(2.5rem, 1.75rem + 3.75vw, 5rem);         /* ~40-80px */
+
+  font-family: var(--font-body);
   font-optical-sizing: auto;
   font-style: normal;
-  line-height: 1.5;
+  font-weight: 400;
+  line-height: 1.6;
   scroll-behavior: smooth;
   color-scheme: light dark;
   color: #eae5ec;
@@ -24,13 +45,19 @@
   --vh: 100svh;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: "Geist", sans-serif;
+/* Display headings — Michroma */
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 1px;
+}
+
+/* Sub-headings — Space Grotesk (same as body, just heavier) */
+h3, h4, h5, h6 {
+  font-family: var(--font-body);
+  font-weight: 500;
+  line-height: 1.3;
 }
 
 body {
@@ -40,22 +67,29 @@ body {
 /* Allow scrolling on mobile */
 @media only screen and (max-width: 768px) {
   body {
-    overflow: auto !important;
+    overflow: visible !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
     height: auto !important;
     min-height: 100vh !important;
-    touch-action: manipulation;
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   html {
+    overflow: visible !important;
     overflow-x: hidden !important;
     overflow-y: auto !important;
-    touch-action: manipulation;
+    height: auto !important;
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   /* Ensure no fixed elements block scrolling */
   .container-main {
     position: static !important;
     height: auto !important;
+    overflow: visible !important;
   }
 }
 
@@ -88,13 +122,90 @@ main {
 body {
   margin: 0;
   height: auto;
-  background-color: #000;
+  background-color: var(--backgroundColor);
   flex-grow: 1;
   --cWidth: calc(100% - 30px);
   --cMaxWidth: 1920px;
   max-width: 100vw;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
+}
+
+/* ── Full-page aurora effect on mobile ── */
+@media only screen and (max-width: 768px) {
+  body {
+    background-color: var(--backgroundColor) !important;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 60%,
+        rgba(120, 60, 255, 0.10), transparent),
+      radial-gradient(ellipse 60% 70% at 75% 30%,
+        rgba(194, 164, 255, 0.08), transparent),
+      radial-gradient(ellipse 90% 40% at 50% 80%,
+        rgba(100, 40, 200, 0.06), transparent);
+    animation: auroraDrift 12s ease-in-out infinite alternate;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 70%,
+        rgba(160, 100, 255, 0.07), transparent),
+      radial-gradient(ellipse 50% 80% at 30% 20%,
+        rgba(130, 80, 230, 0.05), transparent);
+    animation: auroraDrift2 16s ease-in-out infinite alternate;
+    filter: blur(40px);
+  }
+
+  @keyframes auroraDrift {
+    0% { transform: translateY(0%) scale(1); opacity: 0.6; }
+    50% { transform: translateY(-5%) scale(1.03); opacity: 1; }
+    100% { transform: translateY(3%) scale(0.98); opacity: 0.7; }
+  }
+
+  @keyframes auroraDrift2 {
+    0% { transform: translateX(0%) rotate(0deg); opacity: 0.4; }
+    50% { transform: translateX(4%) rotate(1.5deg); opacity: 0.8; }
+    100% { transform: translateX(-3%) rotate(-1deg); opacity: 0.5; }
+  }
+
+  /* Ensure all content sits above the aurora */
+  .container-main,
+  .header,
+  main,
+  section {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Make all sections transparent so aurora shows through uniformly */
+  .techstack,
+  .contact-section,
+  .landing-section {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+
+  .techstack::before {
+    display: none !important;
+  }
 }
 
 .main-body {
@@ -166,6 +277,7 @@ body {
 }
 
 .techstack h2 {
+  font-family: var(--font-display);
   font-size: 80px;
   text-align: center;
   position: absolute;

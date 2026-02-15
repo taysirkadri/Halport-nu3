@@ -1,4 +1,5 @@
 import {
+  FaFacebookF,
   FaGithub,
   FaInstagram,
   FaLinkedinIn,
@@ -60,33 +61,50 @@ const SocialIcons = () => {
   return (
     <div className="icons-section">
       <div className="social-icons" data-cursor="icons" id="social">
-        <span>
-          <a href={config.contact.github} target="_blank" rel="noopener noreferrer">
-            <FaGithub />
-          </a>
-        </span>
-        <span>
-          <a href={config.contact.linkedin} target="_blank" rel="noopener noreferrer">
-            <FaLinkedinIn />
-          </a>
-        </span>
-        <span>
-          <a href={config.contact.twitter} target="_blank" rel="noopener noreferrer">
-            <FaXTwitter />
-          </a>
-        </span>
-        <span>
-          <a href={config.contact.instagram} target="_blank" rel="noopener noreferrer">
-            <FaInstagram />
-          </a>
-        </span>
+        {config.contact.github && (
+          <span>
+            <a href={config.contact.github} target="_blank" rel="noopener noreferrer">
+              <FaGithub />
+            </a>
+          </span>
+        )}
+        {config.contact.linkedin && (
+          <span>
+            <a href={config.contact.linkedin} target="_blank" rel="noopener noreferrer">
+              <FaLinkedinIn />
+            </a>
+          </span>
+        )}
+        {config.contact.twitter && (
+          <span>
+            <a href={config.contact.twitter} target="_blank" rel="noopener noreferrer">
+              <FaXTwitter />
+            </a>
+          </span>
+        )}
+        {config.contact.instagram && (
+          <span>
+            <a href={config.contact.instagram} target="_blank" rel="noopener noreferrer">
+              <FaInstagram />
+            </a>
+          </span>
+        )}
+        {config.contact.facebook && (
+          <span>
+            <a href={config.contact.facebook} target="_blank" rel="noopener noreferrer">
+              <FaFacebookF />
+            </a>
+          </span>
+        )}
       </div>
-      <a className="resume-button" href="#">
-        <HoverLinks text="RESUME" />
-        <span>
-          <TbNotes />
-        </span>
-      </a>
+      {config.contact.resume && (
+        <a className="resume-button" href={config.contact.resume}>
+          <HoverLinks text="RESUME" />
+          <span>
+            <TbNotes />
+          </span>
+        </a>
+      )}
     </div>
   );
 };

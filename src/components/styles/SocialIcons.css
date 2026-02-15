@@ -81,6 +81,15 @@ div.resume-button span {
   width: 100%;
   z-index: 99999;
 }
+/* Hide resume button and social icons on small mobile for clean hero */
+@media only screen and (max-width: 768px) {
+  .resume-button {
+    display: none !important;
+  }
+  .social-icons {
+    display: none !important;
+  }
+}
 @media only screen and (min-width: 900px) {
   .social-icons {
     display: flex;

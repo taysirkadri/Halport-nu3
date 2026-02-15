@@ -3,6 +3,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
 import Lenis from "lenis";
+import { config } from "../config";
 import "./styles/Navbar.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -10,27 +11,38 @@ export let lenis: Lenis | null = null;
 
 const Navbar = () => {
   useEffect(() => {
-    // Initialize Lenis smooth scroll
-    lenis = new Lenis({
-      duration: 1.7,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1.7,
-      touchMultiplier: 2,
-      infinite: false,
-    });
+    // Only use Lenis smooth scroll on desktop — mobile uses native scroll
+    const isMobile = window.innerWidth <= 768;
 
-    // Start paused
-    lenis.stop();
+    if (!isMobile) {
+      // Initialize Lenis smooth scroll
+      lenis = new Lenis({
+        duration: 1.7,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+        wheelMultiplier: 1.7,
+        touchMultiplier: 2,
+        infinite: false,
+      });
 
-    // Handle smooth scroll animation frame
-    function raf(time: number) {
-      lenis?.raf(time);
+      // Start paused
+      lenis.stop();
+
+      // Handle smooth scroll animation frame
+      function raf(time: number) {
+        lenis?.raf(time);
+        requestAnimationFrame(raf);
+      }
       requestAnimationFrame(raf);
+    } else {
+      // On mobile: ensure native scroll works immediately
+      document.body.style.overflow = "auto";
+      document.body.style.overflowX = "hidden";
+      document.documentElement.style.overflow = "auto";
+      document.documentElement.style.overflowX = "hidden";
     }
-    requestAnimationFrame(raf);
 
     // Handle navigation links
     let links = document.querySelectorAll(".header ul a");
@@ -67,14 +79,14 @@ const Navbar = () => {
     <>
       <div className="header">
         <a href="/#" className="navbar-title" data-cursor="disable">
-          Logo
+          Taysir.
         </a>
         <a
-          href="mailto:redoyanul1234@gmail.com"
+          href={`mailto:${config.contact.email}`}
           className="navbar-connect"
           data-cursor="disable"
         >
-          redoyanul1234@gmail.com
+          {config.contact.email}
         </a>
         <ul>
           <li>
